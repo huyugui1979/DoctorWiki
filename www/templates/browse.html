@@ -1,0 +1,41 @@
+
+<ion-view view-title="浏览">
+    <ion-nav-buttons side="right">
+        <a class="button button-icon icon ion-settings" ng-click="filter()"></a>
+    </ion-nav-buttons>
+    <ion-content>
+
+
+            <div class="list card" ng-repeat="post in kemu">
+
+                <form ng-submit="addPost()">
+                    <div class="item item-body">
+
+
+                        <h2>{{post.question}}</h2>
+
+                        <div class="list">
+                            <label>我来回答：</label>
+                            <label class="item item-input">
+                                <textarea placeholder="请输入您的答案" ng-model="title" rows="10" cols="20"
+                                          style="overflow: auto;" maxlength="200"></textarea>
+                            </label>
+                        </div>
+
+                    </div>
+                </form>
+
+                <div class="item tabs tabs-secondary tabs-icon-left">
+                    <a class="tab-item" href="#">
+                        <i class="icon ion-chatbox"></i>
+                        回答
+                    </a>
+                    <a class="tab-item" href="#">
+                        <i class="icon ion-share"></i>
+                        拒答
+                    </a>
+                </div>
+            </div>
+
+    </ion-content>
+</ion-view>

@@ -1,0 +1,26 @@
+<ion-view view-title="过滤">
+    <ion-nav-buttons side="left">
+        <a class="button button-icon icon ion-settings" ng-click="back()">后退</a>
+    </ion-nav-buttons>
+<ion-content>
+    <div class="list" ng-repeat="category in categorys">
+
+        <div class="item item-divider">
+             {{category.name}}
+            </div>
+
+        <li class="item item-checkbox" ng-repeat="child in category.child_depart" >
+
+
+        <label class="checkbox">
+                <input type="checkbox"  ng-true-value="'YES'" ng-false-value="'NO'" ng-model="selected[category.name][$index];">
+            </label>
+            {{child}}
+        </li>
+
+
+
+
+    </div>
+</ion-content>
+</ion-view>

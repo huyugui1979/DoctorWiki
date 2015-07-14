@@ -1,0 +1,31 @@
+<ion-view view-title="审核">
+    <ion-content>
+
+                <div class="list card" ng-repeat="post in kemu">
+
+
+                    <div class="item item-body" >
+                        <label>{{post.question}}</label><br>
+                        <h2>{{post.answer}}</h2>
+                    </div>
+                    <a class="item" href="#">
+                        <label>回答人:{{post.doctor}}</label><br>
+                        <label>时间:{{post.answerTime}}</label>
+
+                    </a>
+                    <div class="item tabs tabs-secondary tabs-icon-left">
+
+                        <a class="tab-item" href="#">
+                            <i class="icon ion-chatbox"></i>
+                            通过
+                        </a>
+                        <a class="tab-item" href="#">
+                            <i class="icon ion-share"></i>
+                            退回
+                        </a>
+                    </div>
+                </div>
+
+
+    </ion-content>
+</ion-view>

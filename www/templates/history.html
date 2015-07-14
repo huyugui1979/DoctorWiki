@@ -1,0 +1,18 @@
+<ion-view view-title="历史">
+    <ion-content>
+             <div class="list card" ng-repeat="post in kemu">
+
+
+                <div class="item item-body" >
+                    <label>{{post.question}}</label><br>
+                    <h2>{{post.answer}}</h2>
+                </div>
+                <a class="item" href="#">
+                    <label>回答人:{{post.doctor}}</label><br>
+                    <label>时间:{{post.answerTime}}</label>
+                    <label>状态:{{post.answerTime}}</label>
+                </a>
+            </div>
+
+    </ion-content>
+</ion-view>

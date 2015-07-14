@@ -1,0 +1,32 @@
+<ion-view view-title="问题搜索">
+    <ion-content class="padding">
+<div class="bar bar-header item-input-inset">
+    <label class="item-input-wrapper">
+        <i class="icon ion-ios-search placeholder-icon"></i>
+        <input type="search" placeholder="Search">
+    </label>
+    <button class="button button-clear">
+        Cancel
+    </button>
+</div>
+        <div class="list card" ng-repeat="post in kemu">
+
+            <a class="item" href="#">
+                <label>回答人:{{post.doctor}}</label><br>
+                <label>时间:{{post.answerTime}}</label>
+
+            </a>
+            <div class="item item-body" >
+                <label>{{post.question}}</label><br>
+                <h2>{{post.answer}}</h2>
+            </div>
+            <div class="item tabs tabs-secondary tabs-icon-left">
+                <a class="tab-item" href="#">
+                    <i class="icon ion-chatbox"></i>
+                    改进
+                </a>
+
+            </div>
+        </div>
+        </ion-content>
+    </ion-view>
