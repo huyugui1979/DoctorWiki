@@ -1,31 +1,38 @@
 <ion-view view-title="审核">
     <ion-content>
+        <ion-refresher
+                pulling-text="Pull to refresh..."
+                on-refresh="doRefresh()">
+        </ion-refresher>
 
-                <div class="list card" ng-repeat="post in kemu">
+        <div class="list card" ng-repeat="answer in answers">
 
+            <div class="item item-body">
+                <label>问题:{{answer.question.question}}</label><br>
 
-                    <div class="item item-body" >
-                        <label>{{post.question}}</label><br>
-                        <h2>{{post.answer}}</h2>
-                    </div>
-                    <a class="item" href="#">
-                        <label>回答人:{{post.doctor}}</label><br>
-                        <label>时间:{{post.answerTime}}</label>
-
-                    </a>
-                    <div class="item tabs tabs-secondary tabs-icon-left">
-
-                        <a class="tab-item" href="#">
-                            <i class="icon ion-chatbox"></i>
-                            通过
-                        </a>
-                        <a class="tab-item" href="#">
-                            <i class="icon ion-share"></i>
-                            退回
-                        </a>
-                    </div>
-                </div>
-
-
+                <h2>答案:{{answer.answer}}</h2>
+            </div>
+            <div class="item item-body">
+                <label>回答人:{{answer.doctor.name}}</label><br>
+                <label>时间:{{answer.answerTime}}</label><br>
+                <label>状态:{{answer.status}}</label>
+            </div>
+            <div class="item tabs tabs-secondary tabs-icon-left">
+                <a class="tab-item" ng-click="pass($index)">
+                    <i class="icon ion-chatbox"></i>
+                    通过
+                </a>
+                <a class="tab-item" ng-click="reject($index)">
+                    <i class="icon ion-share"></i>
+                    退回
+                </a>
+            </div>
+        </div>
+        <ion-infinite-scroll
+                ng-if="moreDataCanBeLoaded"
+                immediate-check="false"
+                on-infinite="loadMore()"
+                distance="1%">
+        </ion-infinite-scroll>
     </ion-content>
 </ion-view>

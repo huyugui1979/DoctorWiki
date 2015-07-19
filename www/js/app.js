@@ -16,7 +16,13 @@ angular.module('starter', ['ionic', 'starter.controllers'])
                 StatusBar.styleDefault();
             }
         });
-    })
+    }).config(function ($stateProvider, $httpProvider, $urlRouterProvider) {
+
+    // We need to setup some parameters for http requests
+    // These three lines are all you need for CORS support
+
+    //$httpProvider.defaults.headers.post['Content-Type'] = 'application/json; charset=UTF-8';
+})
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('login', {
@@ -51,18 +57,12 @@ angular.module('starter', ['ionic', 'starter.controllers'])
                         templateUrl: "templates/browse.html",
                         controller: 'BrowseCtrl'
 
-
             })
             .state('app.audit', {
                 url: "/audit",
-
-
                         templateUrl: "templates/audit.html",
                         controller: 'AuditCtrl'
-
-
             })
-
             .state('app.history', {
                 url: "/history",
 
@@ -82,7 +82,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 
 
             })
-            .state('category', {
+            .state('app.category', {
                 url: "/category",
                 templateUrl: "templates/category.html",
                 controller: 'CategoryCtrl'
