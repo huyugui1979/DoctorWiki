@@ -1,38 +1,18 @@
-<ion-view view-title="审核">
+<ion-view view-title="评论">
     <ion-content>
         <ion-refresher
                 pulling-text="Pull to refresh..."
                 on-refresh="doRefresh()">
         </ion-refresher>
 
-        <div class="list card" ng-repeat="answer in answers">
+        <div class="list" collection-repeat="question in questions">
 
-            <div class="item item-body">
-                <label>问题:{{answer.question.question}}</label><br>
-
-                <h2>答案:{{answer.answer}}</h2>
-            </div>
-            <div class="item item-body">
-                <label>回答人:{{answer.doctor.name}}</label><br>
-                <label>时间:{{answer.answerTime}}</label><br>
-                <label>状态:{{answer.status}}</label>
-            </div>
-            <div class="item tabs tabs-secondary tabs-icon-left">
-                <a class="tab-item" ng-click="pass($index)">
-                    <i class="icon ion-chatbox"></i>
-                    通过
-                </a>
-                <a class="tab-item" ng-click="reject($index)">
-                    <i class="icon ion-share"></i>
-                    退回
-                </a>
-            </div>
+            <a class="item item-avatar" ng-click="goDetail($index)">
+                <img src="img/question.jpg">
+                <h2>{{question.question}}</h2>
+                <p>答案:{{question.answer}}</p>
+                <p>回答人:{{question.doctor.name}}</p>
+            </a>
         </div>
-        <ion-infinite-scroll
-                ng-if="moreDataCanBeLoaded"
-                immediate-check="false"
-                on-infinite="loadMore()"
-                distance="1%">
-        </ion-infinite-scroll>
     </ion-content>
 </ion-view>

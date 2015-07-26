@@ -4,7 +4,7 @@
     <ion-content class="padding">
         <div class="list list-inset">
             <label class="item item-input">
-                <span class="input-label">手机号</span>
+                <span class="input-label">用户名</span>
                 <input type="text" ng-model="data.phone">
             </label>
             <label class="item item-input">
@@ -15,10 +15,10 @@
         <button class="button button-block button-calm" ng-click="login()">Login</button>
         <div class="row">
             <div class="col text-left">
-        <a class="button button-clear button-positive pull-right" ng-click="register()">
+        <a class="button button-clear button-positive pull-right" ui-sref="register">
             注册
         </a></div><div class="col text-right">
-        <a class="button button-clear button-positive pull-left" ng-click="forgetPassword()">
+        <a class="button button-clear button-positive pull-left" ui-sref="forget1">
             忘记密码
         </a></div></div>
     </ion-content>

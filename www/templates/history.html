@@ -4,23 +4,20 @@
                 pulling-text="Pull to refresh..."
                 on-refresh="doRefresh()">
         </ion-refresher>
-             <div class="list card" ng-repeat="answer in answers">
 
-                <div class="item item-body" >
-                    <label>问题:{{answer.question.question}}</label><br>
-                    <h2>答案:{{answer.answer}}</h2>
+        <div class="list" collection-repeat="question in questions">
+
+            <a class="item item-avatar" ng-click="goDetail($index)">
+                <img src="img/question.jpg">
+                <h2>{{question.question}}</h2>
+
+                <div class="item item-input item-stacked-label" >
+                    <textarea ng-model="question.answer"   ng-click="$event.stopPropagation();" style="height:50px;"></textarea>
                 </div>
-                <div class="item item-body">
-                    <label>回答人:{{answer.doctor.name}}</label><br>
-                    <label>时间:{{answer.answerTime}}</label><br>
-                    <label>状态:{{answer.status}}</label>
-                </div>
-            </div>
-        <ion-infinite-scroll
-                ng-if="moreDataCanBeLoaded"
-                immediate-check="false"
-                on-infinite="loadMore()"
-                distance="1%">
-        </ion-infinite-scroll>
+                <button class="button button-full button-positive" ng-click="$event.stopPropagation();modify($index)">
+                    修改
+                </button>
+            </a>
+        </div>
     </ion-content>
 </ion-view>

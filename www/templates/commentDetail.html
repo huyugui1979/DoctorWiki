@@ -1,0 +1,59 @@
+<ion-view view-title="评论">
+
+    <ion-content>
+        <ion-refresher
+                pulling-text="Pull to refresh..."
+                on-refresh="doRefresh()">
+        </ion-refresher>
+
+            <div class="list" collection-repeat="comment in comments">
+                <a class="item item-avatar">
+                    <img src="img/question.jpg">
+                    <h2>评论内容:{{comment.content}}</h2>
+                    <p>评论时间:{{comment.commentTime}}</p>
+                    <p>评论人:{{comment.doctor.name}}</p>
+                </a>
+            </div>
+
+
+        <!--<form name="sendMessageForm" ng-submit="sendComment()" novalidate>-->
+
+            <!--<ion-footer-bar class="bar-stable item-input-inset message-footer" keyboard-attach>-->
+            <!--<label class="item-input-wrapper">-->
+            <!--<input type="text" placeholder="评论" ng-model="myComment">-->
+            <!--</label>-->
+            <!--<button class="button button-small" type="submit">-->
+            <!--发表评论-->
+            <!--</button>-->
+            <!--</ion-footer-bar>-->
+        <!--</form>-->
+
+
+        <!--<div class="bar bar-footer">-->
+            <!--<label class="item-input-wrapper">-->
+                <!--<input type="text" placeholder="Email">-->
+            <!--</label>-->
+            <!--<button class="button button-small">-->
+                <!--发表评论-->
+            <!--</button>-->
+
+        <!--</div>-->
+
+        <!--<div class="bar bar-footer">-->
+            <!--<label class="item-input-wrapper">-->
+            <!--<input type="text" placeholder="评论" ng-model="myComment">-->
+            <!--</label>-->
+            <!--<button class="button button-small" ng-click="sendComment">-->
+            <!--发表评论-->
+            <!--</button>-->
+        <!--</div>-->
+    </ion-content>
+    <ion-footer-bar class="bar-stable item-input-inset message-footer" style="position: fixed;" keyboard-attach>
+        <label class="item-input-wrapper">
+            <input type="text" placeholder="评论" ng-model="data.content">
+        </label>
+        <button class="button button-small" on-tap="sendComment()">
+            发表评论
+        </button>
+    </ion-footer-bar>
+</ion-view>

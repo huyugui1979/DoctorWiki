@@ -1,4 +1,3 @@
-
 <ion-view view-title="浏览">
 
     <ion-content>
@@ -7,36 +6,53 @@
                 on-refresh="doRefresh()">
         </ion-refresher>
 
-            <div class="list card" ng-repeat="question in questions">
+        <div class="list" collection-repeat="question in questions">
 
-                <form ng-submit="addPost()">
-                    <div class="item item-body">
+            <a class="item item-avatar" >
+                <img src="img/question.jpg">
 
+                <h2>{{question.question}}</h2>
 
-                        <h2>{{question.question}}</h2>
+                <div class="item item-input  item-stacked-label" >
 
-                        <div class="list">
-                            <label>我来回答：</label>
-                            <label class="item item-input">
-                                <textarea placeholder="请输入您的答案" ng-model="answers[$index]" rows="10" cols="20"
-                                          style="overflow: auto;" maxlength="200"></textarea>
-                            </label>
-                        </div>
+                    <textarea ng-model="question.answer" ng-click="$event.stopPropagation();" style="height:50px;"></textarea>
 
-                    </div>
-                </form>
-
-                <div class="item tabs tabs-secondary tabs-icon-left">
-                    <a class="tab-item" ng-click="answer($index)">
-                        <i class="icon ion-chatbox"></i>
-                        回答
-                    </a>
-                    <a class="tab-item" ng-click="reject($index)">
-                        <i class="icon ion-share"></i>
-                        拒答
-                    </a>
                 </div>
-            </div>
+                <div class="padding-top ">
+                    <button class="button  button-full button-positive" ng-click="answer($index)">认领</button>
+                </div>
+
+            </a>
+
+        </div>
+
+
+        <!--<div class="list " ng-repeat="question in questions">-->
+        <!--<div class="item item-body">-->
+
+        <!--<h2>{{question.question}}</h2>-->
+
+        <!--<div class="list">-->
+        <!--<label>我来回答：</label>-->
+        <!--<label class="item item-input">-->
+        <!--<textarea placeholder="请输入您的答案" ng-model="question.answer" rows="10" cols="20"-->
+        <!--style="overflow: auto;" maxlength="200"></textarea>-->
+        <!--</label>-->
+        <!--</div>-->
+
+        <!--</div>-->
+
+        <!--<div class="item tabs tabs-secondary tabs-icon-left">-->
+        <!--<a class="tab-item" ng-click="answer($index)">-->
+        <!--<i class="icon ion-chatbox"></i>-->
+        <!--认领-->
+        <!--</a>-->
+        <!--<a class="tab-item" ng-click="reject($index)">-->
+        <!--<i class="icon ion-share"></i>-->
+        <!--放弃-->
+        <!--</a>-->
+        <!--</div>-->
+        <!--</div>-->
 
     </ion-content>
 </ion-view>

@@ -15,9 +15,12 @@ angular.module('starter', ['ionic', 'starter.controllers'])
             if (window.StatusBar) {
                 StatusBar.styleDefault();
             }
-        });
-    }).config(function ($stateProvider, $httpProvider, $urlRouterProvider) {
 
+
+
+        });
+    }).config(function ($stateProvider,$locationProvider, $httpProvider, $urlRouterProvider) {
+       // $locationProvider.html5Mode(true).hashPrefix('!');
     // We need to setup some parameters for http requests
     // These three lines are all you need for CORS support
 
@@ -26,7 +29,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('login', {
-                url: '/login',
+                url: '/login?abc',
                 templateUrl: 'templates/login.html',
                 controller: 'LoginCtrl'
 
@@ -35,6 +38,25 @@ angular.module('starter', ['ionic', 'starter.controllers'])
                 url: '/register',
                 templateUrl: 'templates/register.html',
                 controller: 'RegisterCtrl'
+
+            })
+
+            .state('forget1', {
+                url: '/forget1',
+                templateUrl: 'templates/forgetpasswordStep1.html',
+                controller: 'ForgetpasswordCtrl'
+
+            })
+            .state('forget2', {
+                url: '/forget2',
+                templateUrl: 'templates/forgetpasswordStep2.html',
+                controller: 'ForgetpasswordCtrl'
+
+            })
+            .state('app.commentDetail', {
+                url: '/commentDetail?params',
+                templateUrl: 'templates/commentDetail.html',
+                controller: 'CommentDetailCtrl'
 
             })
             .state('app', {
@@ -58,6 +80,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
                         controller: 'BrowseCtrl'
 
             })
+
             .state('app.audit', {
                 url: "/audit",
                         templateUrl: "templates/audit.html",
@@ -88,5 +111,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
                 controller: 'CategoryCtrl'
             })
 
-        $urlRouterProvider.otherwise('/login');
+        $urlRouterProvider.otherwise('/login')
+
+
     });
