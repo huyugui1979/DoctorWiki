@@ -7,7 +7,7 @@ angular.module('starter.controllers', [])
         //
         $ionicLoading.show({content: '初始化'});
 
-        $http.get('http://10.0.1.3:3000/category') .success(function (data) {
+        $http.get('http://huyugui.f3322.org:3000/category') .success(function (data) {
 
                 $rootScope.category=data;
 
@@ -41,7 +41,7 @@ angular.module('starter.controllers', [])
             delete v.$$hashKey;
             v.doctor=$rootScope.user._id;
 
-            $http.put('http://10.0.1.3:3000/questions',v).success(function (data) {
+            $http.put('http://huyugui.f3322.org:3000/questions',v).success(function (data) {
                 $ionicPopup.alert({
                     title: '',
                     template: '认领成功'
@@ -61,7 +61,7 @@ angular.module('starter.controllers', [])
         //
         var loadQuestion = function(){
             $scope.questions =[];
-            $http.get('http:///10.0.1.3:3000/questions/unanswered',{params:{"tags[]":$rootScope.user.selected,doctor:$rootScope.user._id}}) .success(function (data) {
+            $http.get('http:///huyugui.f3322.org:3000/questions/unanswered',{params:{"tags[]":$rootScope.user.selected,doctor:$rootScope.user._id}}) .success(function (data) {
 
                 if (data != null) {
                     $scope.questions    =data;
@@ -101,7 +101,7 @@ angular.module('starter.controllers', [])
         $scope.login = function(){
             //
             $ionicLoading.show({content: '正在登录'});
-            $http.get('http://10.0.1.3:3000/doctor',{params:$scope.data}) .success(function (data) {
+            $http.get('http://huyugui.f3322.org:3000/doctor',{params:$scope.data}) .success(function (data) {
                 if (data != null) {
                     //
                     if(data.length >0) {
@@ -171,7 +171,7 @@ angular.module('starter.controllers', [])
         $scope.question  = angular.fromJson($stateParams.params);
         var loadComments = function () {
             //
-            $http.get('http://10.0.1.3:3000/comments/'+$scope.question._id).success(function (data) {
+            $http.get('http://huyugui.f3322.org:3000/comments/'+$scope.question._id).success(function (data) {
                 //
                 $scope.comments = data;
                 //
@@ -194,7 +194,7 @@ angular.module('starter.controllers', [])
             $scope.data.question=$scope.question._id;
 
             var j=3;
-            $http.post('http://10.0.1.3:3000/comments',$scope.data).success(function (data) {
+            $http.post('http://huyugui.f3322.org:3000/comments',$scope.data).success(function (data) {
                 //
                 loadComments();
                 //
@@ -233,7 +233,7 @@ angular.module('starter.controllers', [])
         }
         //
         var LoadQuestion=function(){
-            $http.get('http://10.0.1.3:3000/questions/answered',{params:{"tags[]":$rootScope.user.selected}}).success(function (data) {
+            $http.get('http://huyugui.f3322.org:3000/questions/answered',{params:{"tags[]":$rootScope.user.selected}}).success(function (data) {
                 if (data.length>0) {
                     $scope.questions= data;
                 }
@@ -264,7 +264,7 @@ angular.module('starter.controllers', [])
         //
         $scope.modify = function($index){
             //
-            $http.put('http://10.0.1.3:3000/questions',$scope.questions[$index]).success(function (data) {
+            $http.put('http://huyugui.f3322.org:3000/questions',$scope.questions[$index]).success(function (data) {
                 //
                 //
             }).error(function (reason) {
@@ -284,7 +284,7 @@ angular.module('starter.controllers', [])
         }
         //
         var LoadQuestion=function(){
-            $http.get('http://10.0.1.3:3000/questions/doctor',{params:{"tags[]":$rootScope.user.selected,doctor:$rootScope.user._id}}).success(function (data) {
+            $http.get('http://huyugui.f3322.org:3000/questions/doctor',{params:{"tags[]":$rootScope.user.selected,doctor:$rootScope.user._id}}).success(function (data) {
                 if (data.length>0) {
                     $scope.questions= data;
                 }
