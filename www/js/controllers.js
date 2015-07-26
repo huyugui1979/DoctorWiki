@@ -37,7 +37,7 @@ angular.module('starter.controllers', [])
         $scope.answer = function($index){
             //
             $ionicLoading.show();
-            var v =  $scope.question[$index];
+            var v =  $scope.questions[$index];
             delete v.$$hashKey;
             v.doctor=$rootScope.user._id;
 
