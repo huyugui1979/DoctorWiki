@@ -166,7 +166,7 @@ angular.module('starter.controllers', [])
 
         //
     })
-    .controller('CommentDetailCtrl',function($scope,$stateParams,$rootScope,$http){
+    .controller('CommentDetailCtrl',function($scope,$stateParams,$rootScope,$http,$ionicLoading){
         //
         $scope.question  = angular.fromJson($stateParams.params);
         var loadComments = function () {
@@ -177,9 +177,11 @@ angular.module('starter.controllers', [])
                 //
             }).error(function (reason) {
                 //
+
             }).finally(function(){
                 // Stop the ion-refresher from spinning
                 //
+                $scope.$broadcast('scroll.refreshComplete');
             });
             //
         }
@@ -192,7 +194,7 @@ angular.module('starter.controllers', [])
             $scope.data.doctor = $rootScope.user;
             $scope.data.time=Date.now();
             $scope.data.question=$scope.question._id;
-
+            $ionicLoading.show({content: '正在发送'});
             var j=3;
             $http.post('http://huyugui.f3322.org:3000/comments',$scope.data).success(function (data) {
                 //
@@ -200,11 +202,15 @@ angular.module('starter.controllers', [])
                 //
             }).error(function (reason) {
                 //
-
+                $ionicPopup.alert({
+                    title: '错误',
+                    template: '服务器错误:'+reason
+                });
                 //
             }).finally(function(){
                 // Stop the ion-refresher from spinning
                 //
+                $ionicLoading.hide();
             });
         }
         //
@@ -255,7 +261,7 @@ angular.module('starter.controllers', [])
         //
     })
     //历史
-    .controller('HistoryCtrl', function ($scope,$state,$rootScope,$http,$ionicLoading) {
+    .controller('HistoryCtrl', function ($scope,$state,$rootScope,$http,$ionicLoading,$ionicPopup) {
         //
         $scope.questions = [];
         //$scope.$on('$stateChangeSuccess', function() {
@@ -264,8 +270,13 @@ angular.module('starter.controllers', [])
         //
         $scope.modify = function($index){
             //
+            $ionicLoading.show({content: '正在修改'});
             $http.put('http://huyugui.f3322.org:3000/questions',$scope.questions[$index]).success(function (data) {
                 //
+                $ionicPopup.alert({
+                    title: '',
+                    template: '修改成功'
+                });
                 //
             }).error(function (reason) {
                 //
@@ -274,7 +285,7 @@ angular.module('starter.controllers', [])
             }).finally(function(){
             // Stop the ion-refresher from spinning
                //
-
+                $ionicLoading.hide();
             });
             //
         }
