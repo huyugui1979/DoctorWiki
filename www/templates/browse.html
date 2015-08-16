@@ -8,18 +8,20 @@
 
         <div class="list" collection-repeat="question in questions">
 
-            <a class="item item-avatar" >
-                <img src="img/question.jpg">
+            <a class="item item-avatar item-text-wrap" >
+                <img   src="{{question.doctor==null?'img/question.jpg':image_url}}">
+
 
                 <h2>{{question.question}}</h2>
 
                 <div class="item item-input  item-stacked-label" >
-
                     <textarea ng-model="question.answer" ng-click="$event.stopPropagation();" style="height:50px;"></textarea>
 
                 </div>
                 <div class="padding-top ">
-                    <button class="button  button-full button-positive" ng-click="answer($index)">认领</button>
+                    <button  ng-class="{true:'button  button-full button-positive',false:'button  button-full button-balanced' }[question.doctor==null]" ng-click="answer($index)">
+                        {{question.doctor== null ? "认领" : "已认领"}}
+                    </button>
                 </div>
 
             </a>

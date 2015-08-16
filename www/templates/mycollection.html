@@ -1,0 +1,17 @@
+<ion-view view-title="我的收藏">
+    <ion-content>
+        <ion-refresher
+                pulling-text="Pull to refresh..."
+                on-refresh="doRefresh()">
+        </ion-refresher>
+
+        <div class="list" collection-repeat="question in questions">
+            <a class="item item-avatar item-text-wrap" ng-click="goDetail($index)">
+                <img src="{{SERVER.url+'/images/'+question.doctor.image}}">
+                <h2>{{question.question}}</h2>
+                <p>答案:{{question.answer}}</p>
+                <p>回答人:{{question.doctor.name}}</p>
+            </a>
+        </div>
+    </ion-content>
+</ion-view>

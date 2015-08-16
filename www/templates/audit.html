@@ -5,14 +5,27 @@
                 on-refresh="doRefresh()">
         </ion-refresher>
 
-        <div class="list" collection-repeat="question in questions">
+        <div class="bar bar-header item-input-inset">
+            <label class="item-input-wrapper">
+                <i class="icon ion-ios-search placeholder-icon"></i>
+                <input type="search" placeholder="查找" ng-enter="search()"  ng-model="data.search_string">
 
-            <a class="item item-avatar" ng-click="goDetail($index)">
-                <img src="img/question.jpg">
+            </label>
+            <i class="icon ion-mic-a placeholder-icon x-larger" ng-click="beginCaptureAudio()"></i>
+        </div>
+        <div class="list" collection-repeat="question in questions">
+            <a class="item item-avatar item-text-wrap" ng-click="goDetail($index)">
+                <img src="{{SERVER.url+'/images/'+question.doctor.image}}"/>
                 <h2>{{question.question}}</h2>
                 <p>答案:{{question.answer}}</p>
                 <p>回答人:{{question.doctor.name}}</p>
+
+                <i ng-click="$event.stopPropagation();collection(question)" ng-class="{true:'ion-android-favorite x-larger',false:'ion-android-favorite-outline x-larger'}[ $root.user.collections.indexOf(question._id) !=-1]"> </i>{{($root.user.collections.indexOf(question._id) !=-1)? "已收藏" : "未收藏"}}
+                <i ng-click="$event.stopPropagation();addLikeNumber(question)" class="ion-thumbsup x-larger"> </i>{{question.likeNumber}}
+
             </a>
         </div>
     </ion-content>
 </ion-view>
+
+

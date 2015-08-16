@@ -1,23 +1,28 @@
 <ion-view view-title="历史">
     <ion-content>
         <ion-refresher
-                pulling-text="Pull to refresh..."
+                pulling-text="下拉更新"
                 on-refresh="doRefresh()">
         </ion-refresher>
+        <ion-list>
+            <ion-item collection-repeat="question in questions">
 
-        <div class="list" collection-repeat="question in questions">
+                <a class="item item-avatar item-text-wrap" ng-click="goDetail($index)">
+                    <img src="{{SERVER.url+'/images/'+question.doctor.image}}">
 
-            <a class="item item-avatar" ng-click="goDetail($index)">
-                <img src="img/question.jpg">
-                <h2>{{question.question}}</h2>
+                    <h2>{{question.question}}</h2>
 
-                <div class="item item-input item-stacked-label" >
-                    <textarea ng-model="question.answer"   ng-click="$event.stopPropagation();" style="height:50px;"></textarea>
-                </div>
-                <button class="button button-full button-positive" ng-click="$event.stopPropagation();modify($index)">
-                    修改
-                </button>
-            </a>
-        </div>
+                    <div class="item item-input item-stacked-label">
+                        <textarea ng-model="question.answer" ng-click="$event.stopPropagation();"
+                                  style="height:50px;"></textarea>
+                    </div>
+                    <button class="button button-full button-positive"
+                            ng-click="$event.stopPropagation();modify($index)">
+                        修改
+                    </button>
+                </a>
+            </ion-item>
+        </ion-list>
+        <ion-infinite-scroll ng-if="noMoreItemsAvailable" on-infinite="loadMore()" distance="1%"></ion-infinite-scroll>
     </ion-content>
 </ion-view>

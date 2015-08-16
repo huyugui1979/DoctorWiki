@@ -1,25 +1,29 @@
 <ion-view view-title="个人信息">
     <ion-content class="padding">
         <div class="list">
-            <a class="item item-avatar" href="#">
-                <img src="http://127.0.0.1:3000/img/{{person.image}}" ng-click="changeImage()">
-                <h2>用户名</h2>
-                <p>{{person.name}}</p>
-            </a>
+            <div  class="item item-input">
+                <span class="input-label">头像</span>
+                <a ng-click="changeImage()" ><img style="text-align:right" width="30" height="30" src="{{image_url}}" ></a>
 
-            <label class="item item-input">
-                <span class="input-label">岁数</span>
-                <input type="text" ng-model="person.age">
-            </label>
-            <label class="item item-input">
-                <span class="input-label">性别</span>
-                <input type="text" ng-model="person.sex">
-            </label>
-            <label class="item item-input">
-                <span class="input-label">手机</span>
-                <input type="text" ng-model="person.phone">
-            </label>
+            </div>
+            <div class="item item-input"  >
+
+                    <span class="input-label">姓名</span>
+                    <input type="text" ng-model="user.name" ng-change="update()">
+
+
+            </div>
+            <div class="item item-input item-icon-right" ng-click="changePassword()"  >
+                <span class="input-label">更改密码</span>
+
+                    <i class="icon ion-ios-arrow-right"></i>
+
+
+            </div>
+
+            <button class="button button-block button-assertive" ng-click="logout()">注销</button>
         </div>
+
 
     </ion-content>
 </ion-view>
