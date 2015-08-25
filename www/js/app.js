@@ -3,10 +3,10 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var app = angular.module('starter', ['ionic', 'ionic.utils', 'starter.controllers'])
+var app = angular.module('starter', ['ionic', 'ionic.utils', 'angularMoment','starter.controllers'])
     .constant('SERVER', {
         // Local server
-        url: 'http://10.0.1.10:3000'
+        url: 'http://huyugui.f3322.org:3000'
 
         // Public Heroku server
         //url: 'https://ionic-songhop.herokuapp.com'
@@ -42,6 +42,23 @@ var app = angular.module('starter', ['ionic', 'ionic.utils', 'starter.controller
         $httpProvider.defaults.withCredentials = true;
         $httpProvider.defaults.headers.post['Content-Type'] = 'application/json; charset= utf-8';
         // delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    })
+    .factory('QuestionService', function($q,$http,SERVER,$rootScope){
+        var  questions =[];
+        function setData(datas){
+            //
+            questions=datas;
+            //
+        }
+
+        function getQuestionByIndex(index)
+        {
+            return questions[index];
+        }
+        return {
+             setData:setData,
+            getQuestionByIndex:getQuestionByIndex
+        }
     })
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
@@ -133,7 +150,6 @@ var app = angular.module('starter', ['ionic', 'ionic.utils', 'starter.controller
             .state('app.personal', {
                 cache: false,
                 url: "/personal",
-
 
                 templateUrl: "templates/personal.html",
                 controller: 'PersonalCtrl'

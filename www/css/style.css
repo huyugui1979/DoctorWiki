@@ -18,3 +18,14 @@
 .x-larger {
     font-size:  x-large;
 }
+.xx-larger {
+    font-size:  xx-large;
+}
+
+.no-padding {
+    padding: 0px !important;
+}
+.any_content{
+    height: auto;
+    min-height: 100%;
+}

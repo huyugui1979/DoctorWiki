@@ -1,28 +1,31 @@
-<ion-view view-title="历史">
+<ion-view view-title="我的问题">
     <ion-content>
+
         <ion-refresher
                 pulling-text="下拉更新"
                 on-refresh="doRefresh()">
         </ion-refresher>
-        <ion-list>
-            <ion-item collection-repeat="question in questions">
+        <div class="list" ng-repeat="question in questions">
 
-                <a class="item item-avatar item-text-wrap" ng-click="goDetail($index)">
-                    <img src="{{SERVER.url+'/images/'+question.doctor.image}}">
+            <a class="item item-avatar item-text-wrap" ng-click="goDetail($index)" ng-style="{'background-color':$index%2==0?'white':'darkgray'}" style="margin-bottom:-30px;">
 
-                    <h2>{{question.question}}</h2>
+                <img src="{{SERVER.url+'/images/'+question.doctor.image}}">
 
-                    <div class="item item-input item-stacked-label">
-                        <textarea ng-model="question.answer" ng-click="$event.stopPropagation();"
-                                  style="height:50px;"></textarea>
+                <div class="row" >
+                    <div class="col col-90 ">
+                        <h2 id="{{'question'+$index}}">{{question.question}}</h2>
+
+                        <p>修改时间:{{ question.answerTime | amDateFormat:'YYYY-MM-DD, h:mm:ss'}}</p>
+
+                        <p>收藏次数:{{question.collectionNumber}} 评论次数:{{question.comments.length}}</p>
+
                     </div>
-                    <button class="button button-full button-positive"
-                            ng-click="$event.stopPropagation();modify($index)">
-                        修改
-                    </button>
-                </a>
-            </ion-item>
-        </ion-list>
-        <ion-infinite-scroll ng-if="noMoreItemsAvailable" on-infinite="loadMore()" distance="1%"></ion-infinite-scroll>
+                    <div class="col col-center " >
+                       <i class=" text-center ion-ios-arrow-right"></i>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <ion-infinite-scroll ng-if="!noMoreItemsAvailable" immediate-check="true" on-infinite="loadMore()" distance="1%"></ion-infinite-scroll>
     </ion-content>
 </ion-view>

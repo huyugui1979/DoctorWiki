@@ -1,4 +1,4 @@
-<ion-view view-title="评论">
+<ion-view view-title="评论问题">
     <ion-content>
         <ion-refresher
                 pulling-text="Pull to refresh..."
@@ -8,21 +8,31 @@
         <div class="bar bar-header item-input-inset">
             <label class="item-input-wrapper">
                 <i class="icon ion-ios-search placeholder-icon"></i>
-                <input type="search" placeholder="查找" ng-enter="search()"  ng-model="data.search_string">
-
+                <input type="search" placeholder="查找" ng-enter="search()" ng-model="data.search_string">
+                <a  on-touch="cancel()" class="button button-icon icon ion-ios-close-outline x-larger"></a>
             </label>
-            <i class="icon ion-mic-a placeholder-icon x-larger" ng-click="beginCaptureAudio()"></i>
+            <a ng-click="beginCaptureAudio()"><i class="icon ion-mic-a placeholder-icon x-larger" ></i></a>
         </div>
-        <div class="list" collection-repeat="question in questions">
-            <a class="item item-avatar item-text-wrap" ng-click="goDetail($index)">
+
+        <div class="list "    ng-repeat="question in questions" >
+
+            <a  class="item item-avatar  item-text-wrap" style="margin-bottom:-30px;" ng-style="{'background-color':$index%2==0?'white':'darkgray'}" ng-click="goDetail($index)"  >
+
                 <img src="{{SERVER.url+'/images/'+question.doctor.image}}"/>
-                <h2>{{question.question}}</h2>
-                <p>答案:{{question.answer}}</p>
-                <p>回答人:{{question.doctor.name}}</p>
 
-                <i ng-click="$event.stopPropagation();collection(question)" ng-class="{true:'ion-android-favorite x-larger',false:'ion-android-favorite-outline x-larger'}[ $root.user.collections.indexOf(question._id) !=-1]"> </i>{{($root.user.collections.indexOf(question._id) !=-1)? "已收藏" : "未收藏"}}
-                <i ng-click="$event.stopPropagation();addLikeNumber(question)" class="ion-thumbsup x-larger"> </i>{{question.likeNumber}}
+                <div class="row" >
+                    <div class="col col-90 ">
+                        <h2 id="{{'my-question'+$index}}">{{question.question}}</h2>
 
+                        <p>修改时间:{{ question.answerTime | amDateFormat:'YYYY-MM-DD, h:mm:ss'}}</p>
+                        <p>回答人:{{question.doctor.name}}</p>
+                        <p>收藏次数:{{question.collectionNumber}} 评论次数:{{question.comments.length}}</p>
+
+                    </div>
+                    <div class="col col-center " >
+                        <i class=" text-center ion-ios-arrow-right"></i>
+                    </div>
+                </div>
             </a>
         </div>
     </ion-content>
