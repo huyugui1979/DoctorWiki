@@ -7,23 +7,7 @@ angular.module('starter.controllers', ['ionic.utils', 'ngCordova'])
     .controller('AppCtrl', function ($scope, $http, $rootScope, $ionicLoading, $ionicPopup, SERVER) {
         //
 
-        $ionicLoading.show({content: '初始化'});
 
-        $http.get(SERVER.url + '/category').success(function (data) {
-
-
-            $rootScope.category = data;
-            console.log(JSON.stringify($rootScope.category));
-        }).error(function (reason) {
-            //
-            $ionicPopup.alert({
-                title: '错误',
-                template: reason
-            });
-            //
-        }).finally(function () {
-            $ionicLoading.hide();
-        });
         //
 
     })
@@ -133,9 +117,9 @@ angular.module('starter.controllers', ['ionic.utils', 'ngCordova'])
 
             console.log(JSON.stringify(user));
             if (user != null) {
-                console.log("begin log");
+                $ionicLoading.show();
                 $http.get(SERVER.url + '/doctors/id', {params: {_id: user._id}}).success(function (data) {
-                    console.log("log ended");
+                    console.log("login:"+data);
                     $rootScope.user = data;
 
                     $state.go('app.browse', {}, {reload: true});
@@ -144,6 +128,8 @@ angular.module('starter.controllers', ['ionic.utils', 'ngCordova'])
                         title: '错误',
                         template: reason
                     });
+                }).finally(function(){
+                    $ionicLoading.hide();
                 });
 
             }
@@ -154,7 +140,7 @@ angular.module('starter.controllers', ['ionic.utils', 'ngCordova'])
             $cordovaFileTransfer.download(SERVER.url + "/images/" + $rootScope.user.image, targetPath, {}, true)
                 .then(function (result) {
                     console.log("donwload file succeed");
-
+                    console.log(JSON.stringify($rootScope.user));
                     $ionicLoading.hide();
 
                     $state.go('app.category');
@@ -175,6 +161,7 @@ angular.module('starter.controllers', ['ionic.utils', 'ngCordova'])
             $http.get(SERVER.url + '/doctor/login', {params: $scope.data}).success(function (data) {
                 if (data != null) {
                     //
+                    console.log("login suceeed");
                     $localstorage.setObject('user', data[0]);
                     $rootScope.user = data[0];
                     loadImage();
@@ -299,6 +286,14 @@ angular.module('starter.controllers', ['ionic.utils', 'ngCordova'])
         $scope.data = {};
         $scope.sendComment = function () {
             //
+            if($scope.data.content ==null)
+            {
+                $ionicPopup.alert({
+                    title: '错误',
+                    template: '请输入评论内容'
+                });
+                return;
+            }
             $scope.data.doctor = $rootScope.user;
             $scope.data.time = Date.now();
             $scope.data.question = $scope.question._id;
@@ -307,6 +302,7 @@ angular.module('starter.controllers', ['ionic.utils', 'ngCordova'])
             $http.post(SERVER.url + '/comments', $scope.data).success(function (data) {
                 //
                 $scope.question.comments.push(data._id);
+                $scope.data.content=null;
                 loadComments();
                 //
             }).error(function (reason) {
@@ -547,10 +543,31 @@ angular.module('starter.controllers', ['ionic.utils', 'ngCordova'])
             });
         }
 //
+        var LoadingQuestion = function () {
+            $ionicLoading.show();
+            $http.get(SERVER.url + '/questions/answered', {params: {"categorys[]": $rootScope.user.selected}}).success(function (data) {
+
+                $scope.questions = data;
+                //
+                QuestionService.setData( $scope.questions);
+
+
+            }).error(function (reason) {
+                //
+                $ionicPopup.alert({
+                    title: '错误',
+                    template: reason
+                });
+                //
+            }).finally(function () {
+                // Stop the ion-refresher from spinning
+                $ionicLoading.hide();
+            });
+        }
         $scope.doRefresh = function () {
             LoadQuestion();
         };
-        LoadQuestion();
+        LoadingQuestion();
         $scope.$on('$ionicView.enter', function () {
            QuestionService.setData($scope.questions);
             // do what you want to do
@@ -632,8 +649,19 @@ angular.module('starter.controllers', ['ionic.utils', 'ngCordova'])
         //
         //$rootScope.user.selected["外科"][0]=false;
         //k=2;
+        $scope.toggleGroup = function(group) {
+            if ($scope.isGroupShown(group)) {
+                $scope.shownGroup = null;
+            } else {
+                $scope.shownGroup = group;
+            }
+        };
+        $scope.isGroupShown = function(group) {
+            return $scope.shownGroup === group;
+        };
         $scope.selected = new Array();
         $scope.$on('$ionicView.beforeEnter', function () {
+            console.log("cate:"+$rootScope.category);
             $rootScope.category.forEach(function (e, i, a) {
                 $scope.selected[e.name] = new Array();
                 $scope.selected[e.name][e.child_depart.length] = 'NO';
@@ -659,7 +687,6 @@ angular.module('starter.controllers', ['ionic.utils', 'ngCordova'])
 
                     if ($scope.selected[e.name][i1] == 'YES') {
                         //
-                        console.log(e1);
                         $rootScope.user.selected.push(e1);
 
                         //
@@ -686,8 +713,9 @@ angular.module('starter.controllers', ['ionic.utils', 'ngCordova'])
 
     })
     //首页
-    .controller('HomeCtrl', function ($scope) {
-
+    .controller('QuestionDetailCtrl', function ($scope) {
+        //
+        //
     })
     //注册
     //("http://iapp.iiyi.com/zlzs/v7/ext/register/", param);

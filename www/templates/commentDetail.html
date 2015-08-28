@@ -32,7 +32,7 @@
                 <a class="item item-avatar item-text-wrap">
                     <img src="{{SERVER.url+'/images/'+comment.doctor.image}}">
                     <h2>评论内容:{{comment.content}}</h2>
-                    <p>评论时间:{{comment.commentTime}}</p>
+                    <p>评论时间:{{comment.commentTime | amDateFormat:'YYYY-MM-DD, h:mm:ss'}}</p>
                     <p>评论人:{{comment.doctor.name}}</p>
                 </a>
             </div>

@@ -6,12 +6,12 @@
         </ion-refresher>
 
         <div class="list" ng-repeat="question in questions">
-            <a class="item item-avatar item-text-wrap" ng-style="{'background-color':$index%2==0?'white':'darkgray'}" ng-click="goDetail($index)" style="margin-bottom:-30px;">
+            <a class="item item-avatar item-text-wrap" ng-style="{'background-color':$index%2==0?'white':'#f3f3f3'}" ng-click="goDetail($index)" style="margin-bottom:-30px;">
                 <img src="{{SERVER.url+'/images/'+question.doctor.image}}">
                 <div class="row" >
                     <div class="col col-90 ">
                         <h2 id="{{'my-question'+$index}}">{{question.question}}</h2>
-                        <p>修改时间:{{ question.answerTime | amDateFormat:'YYYY-MM-DD, h:mm:ss'}}</p>
+                        <p>修改时间:{{ question.answerTime | amDateFormat:'YYYY-MM-DD h:mm:ss'}}</p>
                         <p>回答人:{{question.doctor.name}}</p>
                         <p>收藏次数:{{question.collectionNumber}} 评论次数:{{question.comments.length}}</p>
                     </div>

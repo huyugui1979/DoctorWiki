@@ -1,23 +1,42 @@
 <ion-view view-title="设置兴趣">
 
-<ion-content>
-    <div class="list" ng-repeat="child_category in category">
-
-        <div class="item item-divider">
-             {{child_category.name}}
+    <ion-content>
+        <ion-list>
+            <div ng-repeat="child_category in category">
+                <ion-item class="item-stable"
+                          ng-click="toggleGroup(child_category)"
+                          ng-class="{active: isGroupShown(child_category)}">
+                    <i class="icon" ng-class="isGroupShown(child_category) ? 'ion-minus' : 'ion-plus'"></i>
+                    {{child_category.name}}
+                </ion-item>
+                <ion-item class="item item-checkbox item-accordion"
+                          ng-repeat="child in child_category.child_depart"
+                          ng-show="isGroupShown(child_category)">
+                    <label class="checkbox" >
+                        <input type="checkbox" ng-true-value="'YES'" ng-false-value="'NO'"
+                               ng-model="selected[child_category.name][$index];">
+                    </label>
+                    {{child}}
+                </ion-item>
             </div>
+        </ion-list>
 
-        <li class="item item-checkbox" ng-repeat="child in child_category.child_depart" >
+        <!--<div class="list" ng-repeat="child_category in category">-->
 
-        <label class="checkbox">
-                <input type="checkbox"  ng-true-value="'YES'" ng-false-value="'NO'" ng-model="selected[child_category.name][$index];">
-            </label>
-            {{child}}
-        </li>
+        <!--<div class="item item-divider"  ng-click="toggleGroup(group)"-->
+        <!--ng-class="{active: isGroupShown(group)}">-->
+        <!--<i class="icon" ng-class="isGroupShown(child_category) ? 'ion-minus' : 'ion-plus'"></i> {{child_category.name}}-->
+        <!--</div>-->
+
+        <!--<li class="item item-checkbox item-accordion" ng-repeat="child in child_category.child_depart" >-->
+
+        <!--<label class="checkbox">-->
+        <!--<input type="checkbox"  ng-true-value="'YES'" ng-false-value="'NO'" ng-model="selected[child_category.name][$index];">-->
+        <!--</label>-->
+        <!--{{child}}-->
+        <!--</li>-->
 
 
-
-
-    </div>
-</ion-content>
+        <!--</div>-->
+    </ion-content>
 </ion-view>

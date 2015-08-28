@@ -3,11 +3,10 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var app = angular.module('starter', ['ionic', 'ionic.utils', 'angularMoment','starter.controllers'])
+var app = angular.module('starter', ['ionic', 'ionic.utils','angularMoment','starter.controllers'])
     .constant('SERVER', {
         // Local server
         url: 'http://huyugui.f3322.org:3000'
-
         // Public Heroku server
         //url: 'https://ionic-songhop.herokuapp.com'
     })
@@ -25,7 +24,7 @@ var app = angular.module('starter', ['ionic', 'ionic.utils', 'angularMoment','st
             });
         };
     }).
-    run(function ($ionicPlatform, SERVER, $rootScope) {
+    run(function ($ionicPlatform, SERVER, $rootScope,$ionicLoading,$http) {
         $rootScope.SERVER = SERVER;
         $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -36,6 +35,23 @@ var app = angular.module('starter', ['ionic', 'ionic.utils', 'angularMoment','st
             if (window.StatusBar) {
                 StatusBar.styleDefault();
             }
+            //
+            $ionicLoading.show({content: '初始化'});
+
+            $http.get(SERVER.url + '/category').success(function (data) {
+
+
+                $rootScope.category = data;
+            }).error(function (reason) {
+                //
+                $ionicPopup.alert({
+                    title: '错误',
+                    template: reason
+                });
+                //
+            }).finally(function () {
+                $ionicLoading.hide();
+            });
         });
     }).config(function ($stateProvider, $locationProvider, $httpProvider, $urlRouterProvider) {
         // $httpProvider.defaults.useXDomain = true;
@@ -110,6 +126,7 @@ var app = angular.module('starter', ['ionic', 'ionic.utils', 'angularMoment','st
                 controller: 'CommentDetailCtrl'
 
             })
+
             .state('app', {
                 url: "/app",
                 abstract: true,

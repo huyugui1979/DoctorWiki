@@ -16,7 +16,7 @@
 
         <div class="list "    ng-repeat="question in questions" >
 
-            <a  class="item item-avatar  item-text-wrap" style="margin-bottom:-30px;" ng-style="{'background-color':$index%2==0?'white':'darkgray'}" ng-click="goDetail($index)"  >
+            <a  class="item item-avatar  item-text-wrap" style="margin-bottom:-30px;" ng-style="{'background-color':$index%2==0?'white':'#f3f3f3'}" ng-click="goDetail($index)"  >
 
                 <img src="{{SERVER.url+'/images/'+question.doctor.image}}"/>
 

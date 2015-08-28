@@ -7,7 +7,7 @@
         </ion-refresher>
         <div class="list" ng-repeat="question in questions">
 
-            <a class="item item-avatar item-text-wrap" ng-click="goDetail($index)" ng-style="{'background-color':$index%2==0?'white':'darkgray'}" style="margin-bottom:-30px;">
+            <a class="item item-avatar item-text-wrap" ng-click="goDetail($index)" ng-style="{'background-color':$index%2==0?'white':'#f3f3f3'}" style="margin-bottom:-30px;">
 
                 <img src="{{SERVER.url+'/images/'+question.doctor.image}}">
 
