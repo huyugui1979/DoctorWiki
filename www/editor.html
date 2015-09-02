@@ -1,0 +1,43 @@
+<html>
+<head>
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+     <script src="lib/wysihtml/dist/wysihtml5x-toolbar.min.js" ></script>
+    <script src="lib/wysihtml/parser_rules/advanced_and_extended.js" ></script>
+   <style>
+       html,body{
+           -webkit-user-select: none;
+           -webkit-touch-callout: none;
+       }
+
+       *[contenteditable] {
+           -webkit-user-select: auto !important;
+       }
+   </style>
+</head>
+<body>
+
+
+           <section>
+               <div  style="height: 100%" id="wysihtml5-editor" spellcheck="false" wrap="off" autofocus placeholder="Enter something ...">
+
+               </div>
+           </section>
+
+
+
+<script>
+    var editor = new wysihtml5.Editor("wysihtml5-editor", {
+        toolbar:     "wysihtml5-editor-toolbar",
+        parserRules: wysihtml5ParserRules
+    });
+    editor.composer.element.ownerDocument.addEventListener("touchstart", function() {
+        setTimeout(function() {
+            editor.composer.iframe.contentWindow.focus();
+        }, 500); // do not use 0, window will get blur in a short time after touchstart.
+    });
+    editor.setValue("abcddeereredfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfsfsdfdfsfsdfsfsfsfsdfdsfdsfdsfsdfdsfdsfsdfsdfdsfdsfsdfsdfsdfsdfsdf");
+</script>
+</body>
+</html>

@@ -2,11 +2,13 @@
 
     <ion-content>
 
-        <div class="item item-avatar item-text-wrap" >
+        <div class="item item-avatar item-text-wrap"  style="height: 100%;" >
             <img src="{{SERVER.url+'/images/'+question.doctor.image}}"/>
             <h2>问题:{{question.question}}</h2>
-            <p ng-if="edit != true">答案:{{question.answer}}</p>
-            <p ng-if="edit==true">答案:<textarea style="height: 100px;width: 100%" ng-model="question.answer"></textarea></p>
+
+           <!--// <p ng-if="edit != true">答案:{{question.answer}}</p>-->
+           <div  ng-bind-html="'答案:'+question.answer"></div>
+            <!--<p ng-if="edit==true">答案:<textarea style="height: 100px;width: 100%" ng-model="question.answer"></textarea></p>-->
             <div class="row "  >
                 <div class="col col">
 
@@ -15,9 +17,10 @@
                    {{question.collectionNumber}}
 
                 </div>
-                <div ng-if="$root.user._id == question.doctor._id "  class="col">
-                    <i ng-click="MyModify()"
-                       class="ion-compose xx-larger"> </i>{{edit == true? "提交" : "修改"}}
+
+                <div ng-if="$root.user._id == question.doctor._id "  class="col" ng-click="goDetail()">
+                    <i
+                       class="ion-compose xx-larger"> </i>修改
                 </div>
 
 

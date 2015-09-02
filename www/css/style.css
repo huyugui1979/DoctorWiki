@@ -29,3 +29,17 @@
     height: auto;
     min-height: 100%;
 }
+.border-around{
+    border:1px solid rgba(2,2,2,0.1);
+    border-radius: 6px;
+    vertical-align: text-bottom;
+}
+
+html,body{
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+*[contenteditable] {
+    -webkit-user-select: auto !important;
+}

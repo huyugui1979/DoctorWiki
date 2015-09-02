@@ -12,9 +12,13 @@ angular.module('starter.controllers', ['ionic.utils', 'ngCordova'])
 
     })
     //浏览
-    .controller('BrowseCtrl', function ($scope, $state, $http, $rootScope, $timeout, $ionicLoading, $ionicModal, $ionicPopup, SERVER) {
+    .controller('BrowseCtrl', function ($scope, $state, $http, $rootScope, $timeout, $ionicLoading,QuestionService, $ionicModal, $ionicPopup, SERVER) {
         //
-
+        //if(window.Alert != null)
+        //{
+        //    window.Alert.alert('ok','ok','ok');
+        //    console.log("editor");
+        //}
         //$scope.image_url = SERVER.url + "/images/" + $rootScope.user.image;
         $scope.$on('$ionicView.enter', function () {
 
@@ -83,7 +87,7 @@ angular.module('starter.controllers', ['ionic.utils', 'ngCordova'])
             }).success(function (data) {
 
                 $scope.questions = data;
-
+                QuestionService.setData(data);
 
             }).error(function (reason) {
                 //
@@ -104,12 +108,11 @@ angular.module('starter.controllers', ['ionic.utils', 'ngCordova'])
 
         //
         $scope.goDetail = function ($index) {
-            var params = angular.toJson($scope.questions[$index]);
-            $state.go('app.browseDetail', {params: params});
+            $state.go('app.commentDetail', {params: $index});
         }
         //
     })
-    .controller('LoginCtrl', function ($scope, $http, $state, $rootScope, $ionicPopup, $cordovaFileTransfer, $localstorage, $ionicLoading, SERVER) {
+    .controller('LoginCtrl', function ($scope, $http, $state, $rootScope, $ionicPopup,$cordovaFile, $cordovaFileTransfer, $localstorage, $ionicLoading, SERVER) {
         $scope.data = {phone: "", password: ""};
 
         $scope.$on('$ionicView.beforeEnter', function () {
@@ -183,16 +186,18 @@ angular.module('starter.controllers', ['ionic.utils', 'ngCordova'])
             $state.go('register')
         }
     })
-    .controller('SearchCtrl', function ($scope) {
-        //
 
-        //
-    })
-    .controller('CommentDetailCtrl', function ($scope, QuestionService, $ionicPopover, $stateParams, $timeout, $rootScope, $http, $ionicPopup, $ionicLoading, SERVER) {
+    .controller('CommentDetailCtrl', function ($scope, $state,QuestionService, $ionicPopover, $stateParams, $timeout, $rootScope, $http, $ionicPopup, $ionicLoading, SERVER) {
         //
         var index = angular.fromJson($stateParams.params);
         $scope.question = QuestionService.getQuestionByIndex(index);
         //
+        //var configs = {
+        //    readOnly: false,
+        //    theme: 'snow'
+        //};
+        //var quill = new Quill('#editor',configs);
+        //quill.addModule('toolbar', { container: '#toolbar' });
 
         var loadComments = function () {
             //
@@ -218,34 +223,39 @@ angular.module('starter.controllers', ['ionic.utils', 'ngCordova'])
         }
         loadComments();
         //
+        $scope.goDetail = function ($index) {
+            //window.location.href="editor.html";
+            $state.go('app.questionDetail', {params: index});
+        }
         $scope.MyModify = function () {
             //
-            if ($rootScope.user._id != $scope.question.doctor._id)
-                return;
-            $scope.edit = !$scope.edit;
-            if ($scope.edit == false) {
-                $ionicLoading.show({content: '正在修改'});
-                $scope.question.answerTime = Date.now();
-                $http.put(SERVER.url + '/questions', $scope.question).success(function (data) {
-                    //
-                    $ionicPopup.alert({
-                        title: '',
-                        template: '修改成功'
-                    });
-                    //
-                }).error(function (reason) {
-                    //
-                    $ionicPopup.alert({
-                        title: '错误',
-                        template: reason
-                    });
-                    //
-                }).finally(function () {
-                    // Stop the ion-refresher from spinning
-                    //
-                    $ionicLoading.hide();
-                });
-            }
+            //if ($rootScope.user._id != $scope.question.doctor._id)
+            //    return;
+            //$scope.edit = !$scope.edit;
+            //if ($scope.edit == false) {
+            //    $ionicLoading.show({content: '正在修改'});
+            //    $scope.question.answerTime = Date.now();
+            //    $http.put(SERVER.url + '/questions', $scope.question).success(function (data) {
+            //        //
+            //        $ionicPopup.alert({
+            //            title: '',
+            //            template: '修改成功'
+            //        });
+            //        //
+            //    }).error(function (reason) {
+            //        //
+            //        $ionicPopup.alert({
+            //            title: '错误',
+            //            template: reason
+            //        });
+            //        //
+            //    }).finally(function () {
+            //        // Stop the ion-refresher from spinning
+            //        //
+            //        $ionicLoading.hide();
+            //    });
+            //}
+
             //
         }
         $scope.collection = function () {
@@ -334,6 +344,8 @@ angular.module('starter.controllers', ['ionic.utils', 'ngCordova'])
 
 
     })
+    //
+
     //
     .controller('MyCollectionCtrl', function ($state, $http, QuestionService, $rootScope, $timeout, $ionicLoading, $ionicPopup, $scope, SERVER) {
 
@@ -641,6 +653,7 @@ angular.module('starter.controllers', ['ionic.utils', 'ngCordova'])
             });
         }
         $scope.$on('$ionicView.enter', function () {
+            $scope.doRefresh();
             QuestionService.setData($scope.questions);
             // do what you want to do
         })
@@ -713,9 +726,54 @@ angular.module('starter.controllers', ['ionic.utils', 'ngCordova'])
 
     })
     //首页
-    .controller('QuestionDetailCtrl', function ($scope) {
+    .controller('QuestionDetailCtrl', function ($scope,$stateParams,SERVER,$http,QuestionService) {
         //
+
+        var index = angular.fromJson($stateParams.params);
+        $scope.question = QuestionService.getQuestionByIndex(index);
         //
+        //var editor = new wysihtml5.Editor("wysihtml5-editor", {
+        //    toolbar:     "wysihtml5-editor-toolbar",
+        //    parserRules: wysihtml5ParserRules
+        //});
+        //editor.composer.element.ownerDocument.addEventListener("touchstart", function() {
+        //    setTimeout(function() {
+        //        editor.composer.iframe.contentWindow.focus();
+        //    }, 500); // do not use 0, window will get blur in a short time after touchstart.
+        //});
+        var editor=null;
+        ionic.DomUtil.ready(function() {
+             editor = new wysihtml5.Editor('editor', {
+                parserRules:  wysihtml5ParserRulesDefaults
+            });
+
+            editor.composer.element.ownerDocument.addEventListener("touchstart", function() {
+                console.log('hell');
+                setTimeout(function() {
+                    editor.composer.iframe.focus();
+                }, 500); // do not use 0, window will get blur in a short time after touchstart.
+            });
+            editor.setValue($scope.question.answer);
+
+        });
+        $scope.$on('$ionicView.beforeLeave', function () {
+           //
+            $scope.question.answer = editor.getValue();
+            $http.put(SERVER.url + '/questions', $scope.question).success(function (data) {
+
+            }).error(function (reason) {
+                //
+                $ionicPopup.alert({
+                    title: '错误',
+                    template: reason
+                });
+                //
+            }).finally(function () {
+
+            });
+            //
+        });
+
     })
     //注册
     //("http://iapp.iiyi.com/zlzs/v7/ext/register/", param);
@@ -862,6 +920,75 @@ angular.module('starter.controllers', ['ionic.utils', 'ngCordova'])
 
             });
         }
+    })
+    .controller('MyCommentCtrl',function($scope, $state, $rootScope, $http, $ionicLoading, $timeout, $ionicPopup, QuestionService, SERVER){
+        //
+        $scope.goDetail = function ($index) {
+            $state.go('app.commentDetail', {'params': $index});
+        }
+        //
+
+        $scope.questions = [];
+        //
+        $scope.doRefresh = function () {
+            $http.get(SERVER.url + '/comments/doctor', {
+                params: {
+                    doctor: $rootScope.user._id
+                }
+            }).success(function (data) {
+                $scope.questions = data;
+                $scope.noMoreItemsAvailable = false;
+                QuestionService.setData( $scope.questions);
+
+            }).error(function (reason) {
+                //
+                $ionicPopup.alert({
+                    title: '错误',
+                    template: error
+                });
+                //
+            }).finally(function () {
+                    $scope.$broadcast('scroll.refreshComplete');
+                }
+            );
+        }
+
+        $scope.noMoreItemsAvailable = false;
+
+
+        $scope.loadMore = function () {
+
+            var minCommentTime = null;
+            if ($scope.questions.length != 0) {
+                minCommentTime = $scope.questions[$scope.questions.length - 1].commentTime;
+            }
+            $http.get(SERVER.url + '/comments/doctor', {
+                params: {
+                    doctor: $rootScope.user._id,
+                    minCommentTime: minCommentTime
+                }
+            }).success(function (data) {
+                if (data.length == 0)
+                    $scope.noMoreItemsAvailable = true;
+                $scope.questions = $scope.questions.concat(data);
+                QuestionService.setData($scope.questions);
+
+            }).error(function (reason) {
+                //
+                $ionicPopup.alert({
+                    title: '错误',
+                    template: error
+                });
+            }).finally(function () {
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            });
+        }
+        $scope.$on('$ionicView.enter', function () {
+            $scope.doRefresh();
+            QuestionService.setData($scope.questions);
+            // do what you want to do
+        })
+        //
     })
     .controller('ForgetpasswordCtrl', function ($scope, $http, $ionicPopup, $rootScope, $state, $ionicLoading, SERVER) {
 

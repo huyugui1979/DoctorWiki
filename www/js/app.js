@@ -6,7 +6,7 @@
 var app = angular.module('starter', ['ionic', 'ionic.utils','angularMoment','starter.controllers'])
     .constant('SERVER', {
         // Local server
-        url: 'http://huyugui.f3322.org:3000'
+        url: 'http://huyugui.f3322.org:3030'
         // Public Heroku server
         //url: 'https://ionic-songhop.herokuapp.com'
     })
@@ -24,14 +24,17 @@ var app = angular.module('starter', ['ionic', 'ionic.utils','angularMoment','sta
             });
         };
     }).
-    run(function ($ionicPlatform, SERVER, $rootScope,$ionicLoading,$http) {
+    run(function ($ionicPlatform, SERVER, $rootScope,$ionicLoading,$http,$ionicPopup) {
         $rootScope.SERVER = SERVER;
+
         $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
+            console.log("device ready");
             if (window.cordova && window.cordova.plugins.Keyboard) {
                 cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
             }
+
             if (window.StatusBar) {
                 StatusBar.styleDefault();
             }
@@ -73,7 +76,7 @@ var app = angular.module('starter', ['ionic', 'ionic.utils','angularMoment','sta
         }
         return {
              setData:setData,
-            getQuestionByIndex:getQuestionByIndex
+             getQuestionByIndex:getQuestionByIndex
         }
     })
     .config(function ($stateProvider, $urlRouterProvider) {
@@ -115,6 +118,7 @@ var app = angular.module('starter', ['ionic', 'ionic.utils','angularMoment','sta
                 templateUrl: 'templates/mycollection.html',
                 controller: 'MyCollectionCtrl'
             })
+
             .state('app.change-password', {
                 url: '/change-password',
                 templateUrl: 'templates/change-password.html',
@@ -126,7 +130,12 @@ var app = angular.module('starter', ['ionic', 'ionic.utils','angularMoment','sta
                 controller: 'CommentDetailCtrl'
 
             })
+            .state('app.questionDetail', {
+                url: '/questionDetail?params',
+                templateUrl: 'templates/questionDetail.html',
+                controller: 'QuestionDetailCtrl'
 
+            })
             .state('app', {
                 url: "/app",
                 abstract: true,
@@ -163,6 +172,11 @@ var app = angular.module('starter', ['ionic', 'ionic.utils','angularMoment','sta
                 url: "/history",
                 templateUrl: "templates/history.html",
                 controller: 'HistoryCtrl'
+            })
+            .state('app.mycomment', {
+                url: "/mycomment",
+                templateUrl: "templates/mycomment.html",
+                controller: 'MyCommentCtrl'
             })
             .state('app.personal', {
                 cache: false,
