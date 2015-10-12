@@ -6,7 +6,7 @@
 var app = angular.module('starter', ['ionic', 'ionic.utils','angularMoment','starter.controllers'])
     .constant('SERVER', {
         // Local server
-        url: 'http://huyugui.f3322.org:3030'
+        url: 'http://113.31.89.204:3030'
         // Public Heroku server
         //url: 'https://ionic-songhop.herokuapp.com'
     })
@@ -39,23 +39,9 @@ var app = angular.module('starter', ['ionic', 'ionic.utils','angularMoment','sta
                 StatusBar.styleDefault();
             }
             //
-            $ionicLoading.show({content: '初始化'});
-
-            $http.get(SERVER.url + '/category').success(function (data) {
-
-
-                $rootScope.category = data;
-            }).error(function (reason) {
-                //
-                $ionicPopup.alert({
-                    title: '错误',
-                    template: reason
-                });
-                //
-            }).finally(function () {
-                $ionicLoading.hide();
-            });
         });
+
+
     }).config(function ($stateProvider, $locationProvider, $httpProvider, $urlRouterProvider) {
         // $httpProvider.defaults.useXDomain = true;
         $httpProvider.defaults.withCredentials = true;

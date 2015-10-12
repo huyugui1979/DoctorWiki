@@ -7,24 +7,50 @@
             <div  class="item item-input">
                 <span class="input-label">头像</span>
 
-                <a ng-click="changeImage()" ><img style="text-align:right" width="30" height="30" src="{{$root.userImageUrl}}" ></a>
+                <a ng-click="changeImage()" ><img style="text-align:right" width="30" height="30" ng-src="{{$root.userImageUrl}}" ></a>
             </div>
             <div class="item item-input"  >
 
-                    <span class="input-label">姓名</span>
-                    <input type="text" ng-model="user.name" ng-change="update()">
+                    <span class="input-label">爱爱医账户</span>
+                    <input  readonly="readonly" type="text" ng-model="user.name ">
+
+
+            </div>
+            <div class="item item-input"  >
+
+                <span class="input-label">真实姓名</span>
+                <input  readonly="readonly" type="text" ng-model="user.trueName">
+
+
+            </div>
+            <div class="item item-input"  >
+
+                <span class="input-label">个人手机</span>
+                <input  readonly="readonly" type="text" ng-model="user.phone" >
+
+
+            </div>
+            <div class="item item-input"  >
+
+                <span class="input-label">问题总数</span>
+                <input  readonly="readonly" type="text" ng-model="user.questionCount" >
+
+
+            </div>
+            <div class="item item-input"  >
+
+                <span class="input-label">评论总数</span>
+                <input  readonly="readonly" type="text" ng-model="user.commentCount" >
 
 
             </div>
             <div class="item item-input item-icon-right" ng-click="changePassword()"  >
                 <span class="input-label">更改密码</span>
-
                     <i class="icon ion-ios-arrow-right"></i>
-
 
             </div>
 
-            <button class="button button-block button-assertive" ng-click="logout()">注销</button>
+            <button class="button button-block button-assertive" ng-click="logout()">退出</button>
         </div>
 
 

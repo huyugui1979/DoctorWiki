@@ -1,27 +1,28 @@
 <ion-view view-title="我的问题">
-    <ion-content>
+    <ion-content >
 
         <ion-refresher
                 pulling-text="下拉更新"
                 on-refresh="doRefresh()">
         </ion-refresher>
+        <h1 ng-if="questions.length == 0" style="color:#636363">您还未认领问题，赶紧去认领问题吧</h1>
         <div class="list" ng-repeat="question in questions">
 
-            <a class="item item-avatar item-text-wrap" ng-click="goDetail($index)" ng-style="{'background-color':$index%2==0?'white':'#f3f3f3'}" style="margin-bottom:-30px;">
+            <a class="item item-avatar item-text-wrap"  ng-style="{'background-color':$index%2==0?'white':'#f3f3f3'}" style="margin-bottom:-30px;">
 
-                <img src="{{SERVER.url+'/images/'+question.doctor.image}}">
+                <img ng-src="{{SERVER.url+'/images/'+question.doctor.image}}">
 
-                <div class="row" >
+                <div class="row" ng-click="goDetail($index)" >
                     <div class="col col-90 ">
                         <h2 id="{{'question'+$index}}">{{question.question}}</h2>
 
-                        <p>修改时间:{{ question.answerTime | amDateFormat:'YYYY-MM-DD, h:mm:ss'}}</p>
+                        <p>修改时间:{{ question.answerTime | amDateFormat:'YYYY-MM-DD HH:mm:ss'}}</p>
 
                         <p>收藏次数:{{question.collectionNumber}} 评论次数:{{question.comments.length}}</p>
 
                     </div>
-                    <div class="col col-center " >
-                       <i class=" text-center ion-ios-arrow-right"></i>
+                    <div class="col col-center "  >
+                       <i class=" text-center ion-ios-arrow-right" ></i>
                     </div>
                 </div>
             </a>

@@ -3,7 +3,7 @@
     <ion-content>
 
         <div class="item item-avatar item-text-wrap"  style="height: 100%;" >
-            <img src="{{SERVER.url+'/images/'+question.doctor.image}}"/>
+            <img ng-src="{{SERVER.url+'/images/'+question.doctor.image}}"/>
             <h2>问题:{{question.question}}</h2>
 
            <!--// <p ng-if="edit != true">答案:{{question.answer}}</p>-->
@@ -12,9 +12,9 @@
             <div class="row "  >
                 <div class="col col">
 
-                    <i ng-click="$event.stopPropagation();collection()"
+                    <i ng-click="$event.stopPropagation();collection()" style="font-size: 32px;color : red;"
                        ng-class="{true:'ion-android-favorite xx-larger',false:'ion-android-favorite-outline xx-larger'}[ $root.user.collections.indexOf(question._id) !=-1]"> </i>
-                   {{question.collectionNumber}}
+                   {{question.collectionNumber}}收藏
 
                 </div>
 
@@ -22,7 +22,6 @@
                     <i
                        class="ion-compose xx-larger"> </i>修改
                 </div>
-
 
             </div>
         </div>
@@ -33,10 +32,10 @@
 
             <div class="list" collection-repeat="comment in comments">
                 <a class="item item-avatar item-text-wrap">
-                    <img src="{{SERVER.url+'/images/'+comment.doctor.image}}">
+                    <img ng-src="{{SERVER.url+'/images/'+comment.doctor.image}}">
                     <h2>评论内容:{{comment.content}}</h2>
-                    <p>评论时间:{{comment.commentTime | amDateFormat:'YYYY-MM-DD, h:mm:ss'}}</p>
-                    <p>评论人:{{comment.doctor.name}}</p>
+                    <p>评论时间:{{comment.commentTime | amDateFormat:'YYYY-MM-DD HH:mm:ss'}}</p>
+                    <p>评论人:{{comment.doctor.trueName}}</p>
                 </a>
             </div>
 

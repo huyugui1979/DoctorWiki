@@ -5,18 +5,29 @@
                 pulling-text="Pull to refresh..."
                 on-refresh="doRefresh()">
         </ion-refresher>
+        <h1 ng-if="questions.length == 0" style="color:#636363">您还未设置兴趣，赶紧去设置兴趣</h1>
 
         <div class="list" ng-repeat="question in questions">
 
-            <div class="item item-avatar item-text-wrap" style="margin-bottom:-30px;" >
-                <img src="{{question.doctor==null?'img/question.jpg':SERVER.url + '/images/' + $root.user.image}}">
+            <div class="item item-avatar item-text-wrap" style="margin-bottom:-30px;">
+                <img ng-src="{{question.doctor==null?'img/question.jpg':SERVER.url + '/images/' + $root.user.image}}">
 
-                <h2 id="{{'question'+$index}}">{{question.question}}</h2>
-                <div  ng-bind-html="'答案:'+question.answer"></div>
-
-                <button   ng-class="{true:'button  button-full button-positive',false:'button  button-full button-balanced' }[question.doctor==null]"
+                <div class="row">
+                    <div class="col-75">
+                        <h2 id="{{'question'+$index}}">{{question.question}}
+                        </h2></div>
+                    <div class="col-25">
+                        <a ng-if="question.shrink"
+                            ng-click="expand($index)">
+                        <i class="ion-plus" style="color:blue">(展开)</i></a>
+                        <a ng-if="!question.shrink" ng-click="expand($index)"><i class="ion-minus" style="color:blue">(收起)</i></a>
+                    </div>
+                </div>
+                <div ng-if="question.shrink" ng-bind-html="'答案:'+question.answer.substring(0,200)"></div>
+                <div ng-if="!question.shrink" ng-bind-html="'答案:'+question.answer"></div>
+                <button ng-class="{true:'button  button-full button-positive',false:'button  button-full button-balanced' }[question.doctor==null]"
                         ng-click="answer($index)">
-                    {{question.doctor== null ? "认领" : "已认领"}}
+                    {{question.doctor== null ? "点击认领问题" : "点击取消认领"}}
                 </button>
 
             </div>
